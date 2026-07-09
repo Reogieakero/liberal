@@ -7,13 +7,28 @@
   font-family: 'Geist Mono', monospace;
   letter-spacing: -0.02em;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.workspaceWrapper {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .main {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 80px 24px;
+  /* Leaves exactly enough breathing room for the collapsed sidebar button row */
+  margin-left: 64px; 
+  transition: margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 
 .welcomeCard {
@@ -56,10 +71,11 @@
   margin: 0;
 }
 
-/* --- Mobile breakpoint --- */
-@media (max-width: 700px) {
+/* Mobile responsive constraints adjustments */
+@media (max-width: 600px) {
   .main {
-    padding: 16px;
+    margin-left: 0px; /* Expands to utilize full screen grid spaces when mobile view collapses */
+    padding: 40px 16px;
   }
 
   .welcomeCard {
