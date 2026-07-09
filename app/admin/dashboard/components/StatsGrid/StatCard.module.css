@@ -1,0 +1,86 @@
+.statCard {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 10px;
+  padding: 14px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.12);
+  border-color: rgba(14, 165, 233, 0.35);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.iconContainer {
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  transition: transform 0.25s ease;
+}
+
+.statCard:hover .iconContainer {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cardValue {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardTrend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.up { color: #16a34a; }
+.down { color: #dc2626; }
+.trendPeriod { color: #94a3b8; margin-left: 2px; }
+.rotateIcon { transform: rotate(180deg); }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn, .statCard, .iconContainer {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

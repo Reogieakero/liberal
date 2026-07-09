@@ -1,0 +1,116 @@
+.panelContentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px; /* Maintaining compact padding densities */
+  width: 100%;
+}
+
+/* Custom Glassmorphic Segmented Selector */
+.uiSelectorContainer {
+  display: flex;
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 6px;
+  padding: 2px;
+  align-self: center;
+  width: 100%;
+  max-width: 240px;
+  box-sizing: border-box;
+}
+
+.selectorTab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  padding: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease-in-out;
+}
+
+.selectorTab:hover {
+  color: #0284c7;
+}
+
+.activeTab {
+  background: #ffffff;
+  color: #0284c7;
+  box-shadow: 0 1px 4px rgba(14, 165, 233, 0.12);
+}
+
+/* Ring Chart Structural Layout */
+.ringChartWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 14px;
+}
+
+.chartWrapper {
+  width: 145px;
+  height: 145px;
+  position: relative;
+}
+
+.ringCenterLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ringValue {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.ringCaption {
+  font-size: 9px;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* Flex Legend Configuration */
+.ringLegend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 10px;
+  color: #64748b;
+  width: 100%;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legendDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legendText {
+  white-space: nowrap;
+}

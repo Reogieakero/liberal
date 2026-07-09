@@ -1,0 +1,78 @@
+.panelContentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Custom UI Segment Switcher Styling */
+.uiSelectorContainer {
+  display: flex;
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  border-radius: 6px;
+  padding: 2px;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 220px;
+  box-sizing: border-box;
+}
+
+.selectorTab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  padding: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease-in-out;
+}
+
+.selectorTab:hover {
+  color: #0284c7;
+}
+
+.activeTab {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 4px rgba(14, 165, 233, 0.12);
+  font-weight: 600;
+}
+
+/* Chart Positioning & Typography Layouts */
+.chartLegend {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #64748b;
+}
+
+.legendBlue,
+.legendGreen {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legendBlue .dot { background: #0284c7; }
+.legendGreen .dot { background: #16a34a; }
+
+.chartWrapper {
+  width: 100%;
+  height: 200px; /* Accounted for selector padding heights */
+  margin-top: 4px;
+}

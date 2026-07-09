@@ -1,0 +1,82 @@
+.panel {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 10px;
+  padding: 14px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.panel:hover {
+  box-shadow: 0 10px 28px rgba(2, 132, 199, 0.1);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.panelTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panelIcon {
+  color: #0284c7;
+}
+
+.panelTitle {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.viewAllBtn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: inherit;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.viewAllBtn:hover {
+  color: #0284c7;
+  gap: 5px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn {
+    animation: none;
+    opacity: 1;
+  }
+  .panel {
+    transition: none;
+  }
+}

@@ -1,0 +1,74 @@
+.statusList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  border-radius: 8px;
+}
+
+.statusRowLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.metaTextWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.studentName {
+  font-size: 11px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.studentRole {
+  font-size: 9px;
+  color: #64748b;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Red indicator pins down high count thresholds */
+.statusDotRed {
+  background: #dc2626;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.statusDotYellow { 
+  background: #eab308; 
+}
+
+.statusDotGreen { 
+  background: #16a34a; 
+}
+
+.statusValue {
+  font-size: 10px;
+  color: #334155;
+  font-weight: 600;
+}
+
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70% { box-shadow: 0 0 0 5px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
