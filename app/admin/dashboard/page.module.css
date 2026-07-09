@@ -6,9 +6,9 @@
   color: #0f172a;
   font-family: 'Geist Mono', monospace;
   letter-spacing: -0.02em;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .workspaceWrapper {
@@ -21,68 +21,504 @@
 
 .main {
   flex-grow: 1;
+  padding: 16px 20px 40px;
+  margin-left: 100px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 80px 24px;
-  /* Leaves exactly enough breathing room for the collapsed sidebar button row */
-  margin-left: 64px; 
-  transition: margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-direction: column;
+  gap: 12px;
   box-sizing: border-box;
 }
 
-.welcomeCard {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(14, 165, 233, 0.2);
-  border-radius: 12px;
-  padding: 40px;
-  max-width: 480px;
-  width: 100%;
-  text-align: center;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-  box-sizing: border-box;
-}
-
-.badge {
-  display: inline-flex;
+.headerRow {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(14, 165, 233, 0.25);
-  color: #0369a1;
-  padding: 4px 12px;
-  border-radius: 100px;
-  font-size: 11px;
-  margin-bottom: 20px;
+  justify-content: space-between;
 }
 
-.title {
-  font-size: 22px;
-  font-weight: 500;
-  margin: 0 0 8px 0;
+.pageTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
   letter-spacing: -0.03em;
 }
 
-.subtitle {
-  font-size: 12px;
+.pageSubtitle {
+  font-size: 11px;
   color: #64748b;
-  line-height: 1.6;
+  margin: 2px 0 0;
+}
+
+.liveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: pulseDot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+/* Entrance animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Compact Metrics Layout */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 10px;
+  padding: 14px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.12);
+  border-color: rgba(14, 165, 233, 0.35);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.iconContainer {
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  transition: transform 0.25s ease;
+}
+
+.statCard:hover .iconContainer {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cardValue {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardTrend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.up { color: #16a34a; }
+.down { color: #dc2626; }
+.trendPeriod { color: #94a3b8; margin-left: 2px; }
+.rotateIcon { transform: rotate(180deg); }
+
+/* Grid Dashboard Modules Layout */
+.chartLayoutGrid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 10px;
+}
+
+.dashboardPanel {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 10px;
+  padding: 14px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.dashboardPanel:hover {
+  box-shadow: 0 10px 28px rgba(2, 132, 199, 0.1);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.panelTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chartIconHeader {
+  color: #0284c7;
+}
+
+.panelTitle {
+  font-size: 13px;
+  font-weight: 600;
   margin: 0;
 }
 
-/* Mobile responsive constraints adjustments */
+.viewAllBtn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: inherit;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.viewAllBtn:hover { color: #0284c7; gap: 5px; }
+
+/* Chart legend (recharts custom legend) */
+.chartLegend {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #64748b;
+}
+
+.legendBlue, .legendGreen, .legendYellow { display: flex; align-items: center; gap: 4px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+.legendBlue .dot { background: #0284c7; }
+.legendGreen .dot { background: #16a34a; }
+.legendYellow .dot { background: #eab308; }
+
+/* Recharts container sizing */
+.rechartsWrapper {
+  width: 100%;
+  height: 220px;
+  margin-top: 4px;
+}
+
+.rechartsWrapperSmall {
+  width: 100%;
+  height: 160px;
+}
+
+/* Custom recharts tooltip */
+.customTooltip {
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-family: 'Geist Mono', monospace;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tooltipDate { color: #64748b; margin-bottom: 4px; font-weight: 600; }
+.tooltipRow { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+
+/* Pie Chart Ring Layout (recharts donut) */
+.ringChartWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 10px;
+  position: relative;
+}
+
+.ringCenterLabel {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.ringValue { font-size: 18px; font-weight: 600; color: #0f172a; }
+.ringCaption { font-size: 9px; color: #94a3b8; margin-top: 1px; }
+
+.ringLegend {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  color: #64748b;
+}
+
+.ringLegend div { display: flex; align-items: center; gap: 4px; }
+.dotBlue { width: 5px; height: 5px; background: #0284c7; border-radius: 50%; }
+.dotGreen { width: 5px; height: 5px; background: #16a34a; border-radius: 50%; }
+.dotYellow { width: 5px; height: 5px; background: #eab308; border-radius: 50%; }
+
+/* Density Data Tables Layouts */
+.tableContainer {
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.dataTable th {
+  color: #64748b;
+  font-weight: 500;
+  padding: 6px 4px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.dataTable tbody tr {
+  transition: background 0.2s ease;
+}
+
+.dataTable tbody tr:hover {
+  background: rgba(14, 165, 233, 0.05);
+}
+
+.dataTable td {
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
+  color: #334155;
+}
+
+.tableNameCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #0f172a;
+}
+
+.tableAvatar {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.statusBadge {
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statusBadge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.danger { color: #dc2626; }
+.success { color: #16a34a; }
+.warning { color: #d97706; }
+
+/* Right Section Horizontal Metrics Progress bars */
+.progressList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 12px;
+}
+
+.progressItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #334155;
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 5px;
+  background: rgba(14, 165, 233, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #0284c7);
+  border-radius: 3px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* System status panel */
+.statusPanelList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  border-radius: 8px;
+}
+
+.statusRowLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusDotGreen { background: #16a34a; animation: pulseDot 2s ease-in-out infinite; }
+.statusDotYellow { background: #eab308; }
+.statusDotRed { background: #dc2626; }
+
+.statusValue {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Activity feed */
+.activityList {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
+  transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+.activityItem:last-child { border-bottom: none; }
+
+.activityItem:hover {
+  background: rgba(14, 165, 233, 0.04);
+  padding-left: 8px;
+  border-radius: 6px;
+}
+
+.activityIconWrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.activityContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex-grow: 1;
+}
+
+.activityText { font-size: 12px; color: #0f172a; }
+.activityText b { font-weight: 600; }
+.activityMeta { font-size: 10px; color: #94a3b8; }
+
+.activityTime {
+  font-size: 10px;
+  color: #94a3b8;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+@media (max-width: 900px) {
+  .chartLayoutGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   .main {
-    margin-left: 0px; /* Expands to utilize full screen grid spaces when mobile view collapses */
-    padding: 40px 16px;
+    margin-left: 0;
+    padding: 12px;
   }
+}
 
-  .welcomeCard {
-    padding: 28px 20px;
-  }
-
-  .title {
-    font-size: 19px;
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn, .liveDot, .statusDotGreen, .progressBarFill {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
