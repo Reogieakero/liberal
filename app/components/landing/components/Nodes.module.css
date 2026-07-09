@@ -1,0 +1,42 @@
+.node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 4;
+}
+
+.nodeIcon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0284c7;
+  backdrop-filter: blur(4px);
+}
+
+.nodeText h4, .nodeTextRight h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.nodeText p, .nodeTextRight p {
+  margin: 1px 0 0 0;
+  font-size: 10px;
+  color: #64748b;
+}
+
+.nodeTextRight {
+  text-align: right;
+}
+
+.nodeTopLeft { top: 22%; left: 10%; }
+.nodeBottomLeft { bottom: 28%; left: 8%; }
+.nodeTopRight { top: 24%; right: 12%; }
+.nodeBottomRight { bottom: 25%; right: 10%; }

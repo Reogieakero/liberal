@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  width: 100%;
+}
+
+.logoCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%, #0284c7 0deg, #ffffff 360deg);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  padding: 4px 8px;
+  border-radius: 8px;
+  backdrop-filter: blur(12px);
+}
+
+.navLink {
+  color: #475569;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.navLink:hover {
+  color: #0284c7;
+  background: rgba(14, 165, 233, 0.1);
+}
+
+.protectionBtn {
+  background: #0284c7;
+  border: 1px solid #0369a1;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Geist Mono', monospace;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  transition: background 0.15s ease;
+}
+
+.protectionBtn:hover {
+  background: #0369a1;
+}
+
+.createAccount {
+  color: #0f172a;
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.8;
+  transition: opacity 0.15s ease;
+}
+
+.createAccount:hover {
+  opacity: 1;
+  color: #0284c7;
+}
