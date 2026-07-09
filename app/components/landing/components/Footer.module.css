@@ -24,3 +24,20 @@
 .logoRow span:hover {
   color: #0284c7;
 }
+
+/* --- Mobile breakpoint --- */
+@media (max-width: 700px) {
+  .logoRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 22px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .logoRow {
+    gap: 10px 16px;
+    font-size: 11px;
+  }
+}

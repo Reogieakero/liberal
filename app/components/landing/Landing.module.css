@@ -140,3 +140,50 @@
   66%, 94% { width: 75%; }
   99%, 100% { width: 100%; }
 }
+
+/* --- Mobile breakpoint --- */
+@media (max-width: 860px) {
+  .container {
+    padding: 16px 20px;
+  }
+
+  .main {
+    padding: 32px 0 56px 0;
+  }
+
+  .blurRight {
+    width: 380px;
+    height: 340px;
+    right: -20%;
+  }
+
+  .blurLeft {
+    width: 320px;
+    height: 320px;
+    left: -20%;
+  }
+
+  .matrixLines {
+    display: none;
+  }
+
+  .scrollIndicator,
+  .horizonsIndicator {
+    position: static;
+    margin: 8px auto 0 auto;
+  }
+
+  .horizonsIndicator {
+    text-align: center;
+  }
+
+  .progressBar {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    padding: 14px 14px;
+  }
+}

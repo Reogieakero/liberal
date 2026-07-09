@@ -40,3 +40,11 @@
 .nodeBottomLeft { bottom: 28%; left: 8%; }
 .nodeTopRight { top: 24%; right: 12%; }
 .nodeBottomRight { bottom: 25%; right: 10%; }
+
+/* Below this width there isn't room for floating badges without
+   overlapping the hero copy, so they're hidden rather than squeezed. */
+@media (max-width: 700px) {
+  .node {
+    display: none;
+  }
+}
