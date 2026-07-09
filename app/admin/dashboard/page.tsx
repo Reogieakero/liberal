@@ -1,40 +1,24 @@
 "use client";
 
 import React from 'react';
-import { Shield, LogOut } from 'lucide-react';
+import { Shield } from 'lucide-react';
 import styles from './page.module.css';
-import { useLogout } from '../../hooks/useLogout';
+import AdminNavbar from '../components/Navbar';
 
 export default function AdminDashboard() {
-  const { logout, isLoggingOut } = useLogout();
-
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.brand}>
-          <div className={styles.logoCircle}></div>
-          <span className={styles.brandText}>Admin Dashboard</span>
-        </div>
-
-        <button
-          className={styles.logoutBtn}
-          onClick={logout}
-          disabled={isLoggingOut}
-        >
-          <LogOut size={14} />
-          {isLoggingOut ? 'Signing out...' : 'Sign out'}
-        </button>
-      </header>
+      {/* Replaced the old inline header with the Supabase-style custom navbar */}
+      <AdminNavbar />
 
       <main className={styles.main}>
         <div className={styles.welcomeCard}>
           <div className={styles.badge}>
-            <Shield size={12} /> Authenticated Session
+            <Shield size={12} /> Secure Connection Active
           </div>
-          <h1 className={styles.title}>Welcome back</h1>
+          <h1 className={styles.title}>Welcome Back</h1>
           <p className={styles.subtitle}>
-            You&apos;re signed in with an active admin session. Build out the
-            rest of this dashboard here.
+            You are successfully signed into your administrator account. You can safely manage your institution from this panel.
           </p>
         </div>
       </main>

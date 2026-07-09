@@ -9,59 +9,6 @@
   box-sizing: border-box;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logoCircle {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: conic-gradient(from 180deg at 50% 50%, #0284c7 0deg, #ffffff 360deg);
-  flex-shrink: 0;
-}
-
-.brandText {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.logoutBtn {
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(14, 165, 233, 0.25);
-  color: #0369a1;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-family: 'Geist Mono', monospace;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  backdrop-filter: blur(4px);
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.logoutBtn:hover {
-  background: #bae6fd;
-  border-color: rgba(14, 165, 233, 0.5);
-}
-
-.logoutBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .main {
   display: flex;
   justify-content: center;
@@ -111,14 +58,6 @@
 
 /* --- Mobile breakpoint --- */
 @media (max-width: 700px) {
-  .header {
-    padding: 16px;
-  }
-
-  .brandText {
-    font-size: 12px;
-  }
-
   .main {
     padding: 16px;
   }

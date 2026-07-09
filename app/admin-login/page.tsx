@@ -27,42 +27,42 @@ export default function AdminLogin() {
       <div className={styles.blurLeft}></div>
       <div className={styles.blurCenter}></div>
 
-      {/* Decorative Matrix Background Lines */}
+      {/* Decorative Background Lines */}
       <div className={styles.matrixLines}>
         <span className={styles.line}></span>
         <span className={styles.line}></span>
         <span className={styles.line}></span>
       </div>
 
-      {/* Floating Status Nodes matching your Landing Theme */}
+      {/* Friendly Informational Floating Nodes */}
       <div className={`${styles.node} ${styles.nodeTopLeft}`}>
         <div className={styles.nodeIcon}><Activity size={10} /></div>
         <div className={styles.nodeText}>
-          <h4>Node: Auth-A</h4>
-          <p>Status: Online</p>
+          <h4>Server Status</h4>
+          <p>Running smoothly</p>
         </div>
       </div>
 
       <div className={`${styles.node} ${styles.nodeBottomLeft}`}>
         <div className={styles.nodeIcon}><Terminal size={10} /></div>
         <div className={styles.nodeText}>
-          <h4>Shell: v2.4</h4>
-          <p>Secure Handshake</p>
+          <h4>Connection</h4>
+          <p>Fully secure</p>
         </div>
       </div>
 
       <div className={`${styles.node} ${styles.nodeTopRight}`}>
         <div className={styles.nodeTextRight}>
-          <h4>Gateway</h4>
-          <p>Port 443 Secured</p>
+          <h4>Security</h4>
+          <p>Encrypted portal</p>
         </div>
         <div className={styles.nodeIcon}><Radio size={10} /></div>
       </div>
 
       <div className={`${styles.node} ${styles.nodeBottomRight}`}>
         <div className={styles.nodeTextRight}>
-          <h4>System Core</h4>
-          <p>Load: 0.12%</p>
+          <h4>System Performance</h4>
+          <p>Optimal load</p>
         </div>
         <div className={styles.nodeIcon}><Cpu size={10} /></div>
       </div>
@@ -72,7 +72,7 @@ export default function AdminLogin() {
           <ArrowLeft size={14} /> Back to Portal
         </Link>
         <div className={styles.securityBadge}>
-          <Shield size={12} className={styles.shieldIcon} /> Elevated Shell
+          <Shield size={12} className={styles.shieldIcon} /> Secure Access
         </div>
       </header>
 
@@ -80,20 +80,20 @@ export default function AdminLogin() {
         <div className={styles.loginCard}>
           <div className={styles.cardHeader}>
             <div className={styles.logoCircle}></div>
-            <h1 className={styles.title}>System Administration</h1>
-            <p className={styles.subtitle}>Elevated privileges required to bypass the core firewall gateway</p>
+            <h1 className={styles.title}>Admin Dashboard Login</h1>
+            <p className={styles.subtitle}>Please sign in with your administrator account details to manage your institution</p>
           </div>
 
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.inputGroup}>
-              <label htmlFor="username" className={styles.label}>Admin Identifier</label>
+              <label htmlFor="username" className={styles.label}>Username or Email</label>
               <div className={styles.inputWrapper}>
                 <User className={styles.inputIcon} size={16} />
                 <input
                   type="text"
                   id="username"
                   className={styles.input}
-                  placeholder="admin_id"
+                  placeholder="Enter your username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
@@ -103,14 +103,14 @@ export default function AdminLogin() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="password" className={styles.label}>Security Passkey</label>
+              <label htmlFor="password" className={styles.label}>Password</label>
               <div className={styles.inputWrapper}>
                 <KeyRound className={styles.inputIcon} size={16} />
                 <input
                   type={inputType}
                   id="password"
                   className={styles.input}
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
@@ -134,14 +134,14 @@ export default function AdminLogin() {
             )}
 
             <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
-              {isSubmitting ? 'Verifying...' : 'Verify Credentials'}
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <p>© 2026 Institutional Core Subsystem. All Rights Reserved.</p>
+        <p>© 2026 Institutional Management Platform. All Rights Reserved.</p>
       </footer>
     </div>
   );

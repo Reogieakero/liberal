@@ -1,0 +1,198 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 40px;
+  background: transparent;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+  box-sizing: border-box;
+  z-index: 50;
+  position: relative;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%, #0284c7 0deg, #ffffff 360deg);
+  flex-shrink: 0;
+}
+
+.brandText {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Spacing between search bar and the profile avatar */
+}
+
+/* Supabase-style Search Layout */
+.searchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 240px; /* Streamlined clean width standard next to profile buttons */
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 6px;
+  padding: 6px 10px 6px 32px;
+  font-size: 12px;
+  font-family: inherit;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+.searchInput:focus {
+  background: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* Profile Area & Floating Dropdown Container */
+.profileMenuContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.avatarButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #475569;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.avatarButton:hover,
+.avatarButton[aria-expanded="true"] {
+  background: #ffffff;
+  border-color: #0284c7;
+  color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.avatarIcon {
+  flex-shrink: 0;
+}
+
+/* Floating Dropdown Card Settings */
+.dropdownMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 8px;
+  width: 220px;
+  padding: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(16px);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.12s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownHeader {
+  padding: 4px 6px 8px 6px;
+}
+
+.userRole {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.userAccount {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  color: #64748b;
+  word-break: break-all;
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: rgba(14, 165, 233, 0.1);
+  margin: 6px 0 8px 0;
+}
+
+.signOutBtn {
+  background: transparent;
+  color: #64748b;
+  border: 1px solid transparent;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.signOutBtn:hover:not(:disabled) {
+  background: #fff1f2;
+  color: #ef4444;
+}
+
+.signOutBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsiveness Viewports */
+@media (max-width: 700px) {
+  .navbar {
+    padding: 12px 20px;
+  }
+  
+  .brandText {
+    display: none; /* Auto hides textual dashboard tags on tight viewport displays */
+  }
+
+  .searchContainer {
+    width: 160px; /* Compress the search layout sizing slightly on smartphones */
+  }
+}
