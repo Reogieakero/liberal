@@ -1,0 +1,268 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Expanded/Wider high density window canvas dimensions */
+.modalWindow {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 540px; /* Increased from 400px to expand layout area */
+  box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.1), 0 10px 10px -5px rgba(14, 165, 233, 0.04);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.titleGroup h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.headerIcon {
+  color: #0284c7;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.closeBtn:hover {
+  color: #ef4444;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gridFieldsRow {
+  display: flex;
+  gap: 14px;
+}
+
+.gridFieldsRow .inputGroup {
+  flex: 1;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.inputGroup label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* File Upload System Dropzone Styles */
+.fileDropzone {
+  border: 2px dashed rgba(14, 165, 233, 0.25);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.fileDropzone:hover {
+  border-color: #0284c7;
+  background: rgba(14, 165, 233, 0.03);
+}
+
+.hasFile {
+  border-style: solid;
+  border-color: #16a34a;
+  background: rgba(22, 163, 74, 0.02);
+}
+
+.uploadIcon {
+  color: #64748b;
+}
+
+.fileDropzone:hover .uploadIcon {
+  color: #0284c7;
+}
+
+.dropzoneText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropzoneText strong {
+  font-size: 11px;
+  color: #334155;
+}
+
+.dropzoneText span {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.filenameActive {
+  color: #15803d !important;
+  font-weight: 600;
+  font-size: 12px !important;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+/* Custom UI Selector Dropdown styling replacing default select elements */
+.customSelectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.customSelectHeader {
+  background: #ffffff;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: #0f172a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.customSelectHeader:hover {
+  border-color: #0284c7;
+}
+
+.customOptionsList {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  z-index: 10;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.customOption {
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #334155;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customOption:hover {
+  background: rgba(14, 165, 233, 0.08);
+  color: #0284c7;
+}
+
+.selectedOption {
+  font-weight: 600;
+  color: #0284c7;
+  background: rgba(14, 165, 233, 0.04);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
+  padding-top: 12px;
+}
+
+.cancelBtn {
+  background: transparent;
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-family: inherit;
+  font-size: 11px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background: rgba(14, 165, 233, 0.05);
+  color: #0f172a;
+}
+
+.saveBtn {
+  background: #0284c7;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: #0369a1;
+}
+
+.saveBtn:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 580px) {
+  .gridFieldsRow {
+    flex-direction: column;
+    gap: 14px;
+  }
+}
