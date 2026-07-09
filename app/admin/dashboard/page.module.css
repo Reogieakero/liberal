@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&display=swap');
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ffffff 100%);
+  color: #0f172a;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: -0.02em;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%, #0284c7 0deg, #ffffff 360deg);
+  flex-shrink: 0;
+}
+
+.brandText {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.logoutBtn {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0369a1;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Geist Mono', monospace;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.logoutBtn:hover {
+  background: #bae6fd;
+  border-color: rgba(14, 165, 233, 0.5);
+}
+
+.logoutBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 24px;
+}
+
+.welcomeCard {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0369a1;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Mobile breakpoint --- */
+@media (max-width: 700px) {
+  .header {
+    padding: 16px;
+  }
+
+  .brandText {
+    font-size: 12px;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .welcomeCard {
+    padding: 28px 20px;
+  }
+
+  .title {
+    font-size: 19px;
+  }
+}
