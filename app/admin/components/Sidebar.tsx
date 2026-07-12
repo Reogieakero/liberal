@@ -24,7 +24,7 @@ export default function AdminSidebar() {
     { name: 'Users', href: '/admin/users', icon: Users },
     { name: 'Scanners', href: '/admin/scanners', icon: Scan },
     { name: 'Documents', href: '/admin/documents', icon: FileText },
-    { name: 'Announcements', href: '/admin/announcements', icon: Megaphone },
+    { name: 'Announcements', href: '/admin/announcement', icon: Megaphone },
     { name: 'Payments', href: '/admin/payments', icon: CreditCard },
     { name: 'Absences', href: '/admin/absences', icon: CalendarX },
     { name: 'Sanctions', href: '/admin/sanctions', icon: AlertTriangle },
