@@ -15,18 +15,23 @@ interface AuditRow {
   id: string;
   audit_code: string;
   name: string;
+  description: string;
   file_url: string;
   author: string;
   type: string;
+  issuer: string;
   scope: string;
   created_at: string;
 }
 
 interface AuditDisplayRow {
+  uuid: string;
   id: string;
   name: string;
+  description: string;
   author: string;
   type: string;
+  issuer: string;
   date: string;
   scope: string;
   fileUrl: string;
@@ -36,10 +41,13 @@ const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 
 const toDisplayRow = (row: AuditRow): AuditDisplayRow => ({
+  uuid: row.id,
   id: row.audit_code,
   name: row.name,
+  description: row.description ?? '',
   author: row.author,
   type: row.type,
+  issuer: row.issuer,
   date: formatDate(row.created_at),
   scope: row.scope,
   fileUrl: row.file_url,
@@ -74,6 +82,7 @@ export default function AdminDocuments() {
 
   const handleAddAudit = async (newAudit: {
     name: string;
+    description: string;
     type: string;
     issuer: string;
     scope: string;
@@ -88,6 +97,7 @@ export default function AdminDocuments() {
       .insert({
         audit_code: auditCode,
         name: newAudit.name,
+        description: newAudit.description,
         file_url: newAudit.fileUrl,
         file_path: newAudit.filePath,
         author: 'SuperAdmin',
@@ -104,6 +114,38 @@ export default function AdminDocuments() {
     }
 
     setAuditLogs([toDisplayRow(data as AuditRow), ...auditLogs]);
+  };
+
+  const handleEditAudit = async (
+    uuid: string,
+    updates: {
+      name: string;
+      description: string;
+      type: string;
+      issuer: string;
+      scope: string;
+    }
+  ) => {
+    const { data, error } = await supabase
+      .from('audits')
+      .update({
+        name: updates.name,
+        description: updates.description,
+        type: updates.type,
+        issuer: updates.issuer,
+        scope: updates.scope,
+      })
+      .eq('id', uuid)
+      .select()
+      .single();
+
+    if (error) {
+      setLoadError(error.message);
+      return;
+    }
+
+    const updatedRow = toDisplayRow(data as AuditRow);
+    setAuditLogs((prev) => prev.map((a) => (a.uuid === uuid ? updatedRow : a)));
   };
 
   return (
@@ -152,7 +194,7 @@ export default function AdminDocuments() {
               isLoading ? (
                 <p style={{ fontSize: '11px', color: '#64748b' }}>Loading audits...</p>
               ) : (
-                <AdminAuditsTable searchQuery={searchQuery} documentsList={auditLogs} />
+                <AdminAuditsTable searchQuery={searchQuery} documentsList={auditLogs} onEdit={handleEditAudit} />
               )
             ) : (
               <StudentReceiptsTable searchQuery={searchQuery} />

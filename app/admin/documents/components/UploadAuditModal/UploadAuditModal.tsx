@@ -10,6 +10,7 @@ interface ModalProps {
   onClose: () => void;
   onSave: (data: {
     name: string;
+    description: string;
     type: string;
     issuer: string;
     scope: string;
@@ -34,6 +35,7 @@ const auditTypes = [
 
 export default function UploadAuditModal({ isOpen, onClose, onSave }: ModalProps) {
   const [filename, setFilename] = useState('');
+  const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [classification, setClassification] = useState('System Audit');
   const [issuer, setIssuer] = useState('Faculty');
@@ -79,6 +81,7 @@ export default function UploadAuditModal({ isOpen, onClose, onSave }: ModalProps
 
       onSave({
         name: filename,
+        description: description,
         type: classification,
         issuer: issuer,
         scope: scope,
@@ -88,6 +91,7 @@ export default function UploadAuditModal({ isOpen, onClose, onSave }: ModalProps
 
       // Reset controls
       setFilename('');
+      setDescription('');
       setSelectedFile(null);
       setClassification('System Audit');
       setIssuer('Faculty');
@@ -147,6 +151,28 @@ export default function UploadAuditModal({ isOpen, onClose, onSave }: ModalProps
                 accept=".pdf,.xlsx,.png,.jpg,.jpeg"
               />
             </div>
+          </div>
+
+          {/* Description */}
+          <div className={styles.inputGroup}>
+            <label>Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Brief summary of this audit entry..."
+              rows={3}
+              style={{
+                width: '100%',
+                resize: 'vertical',
+                fontFamily: 'inherit',
+                fontSize: '12px',
+                padding: '8px 10px',
+                borderRadius: '6px',
+                border: '1px solid rgba(148, 163, 184, 0.35)',
+                background: 'rgba(15, 23, 42, 0.02)',
+                boxSizing: 'border-box',
+              }}
+            />
           </div>
 
           <div className={styles.gridFieldsRow}>
@@ -232,7 +258,7 @@ export default function UploadAuditModal({ isOpen, onClose, onSave }: ModalProps
               Cancel
             </button>
             <button type="submit" className={styles.saveBtn} disabled={!filename || isUploading}>
-              {isUploading ? 'Uploading...' : 'Commit Entry'}
+              {isUploading ? 'Uploading...' : 'Upload Document'}
             </button>
           </div>
         </form>
