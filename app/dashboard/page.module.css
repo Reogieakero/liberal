@@ -1,0 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&display=swap');
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ffffff 100%);
+  color: #0f172a;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: -0.02em;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.logoCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%, #0284c7 0deg, #ffffff 360deg);
+}
+
+.signOutBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #475569;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-family: 'Geist Mono', monospace;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.signOutBtn:hover {
+  color: #0284c7;
+  border-color: #0284c7;
+}
+
+.main {
+  padding: 20px 40px 60px;
+}
+
+/* Dashboard content sits underneath the modal, dimmed and inert */
+.blockedContent {
+  filter: blur(3px);
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+
+.welcome {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(16px);
+}
+
+.card svg {
+  color: #0284c7;
+}
+
+.card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 12px 0 6px 0;
+}
+
+.card p {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Complete-profile modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.modalCard {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  width: 100%;
+  max-width: 420px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+.modalHeader {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.modalIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px auto;
+}
+
+.modalTitle {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.03em;
+}
+
+.modalSubtitle {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 11px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-family: 'Geist Mono', monospace;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.input:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-family: 'Geist Mono', monospace;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.selectTrigger[data-placeholder] {
+  color: #94a3b8;
+}
+
+.selectTrigger:focus,
+.selectTrigger[data-state="open"] {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.selectChevron {
+  color: #64748b;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.selectTrigger[data-state="open"] .selectChevron {
+  transform: rotate(180deg);
+}
+
+.selectContent {
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(2, 132, 199, 0.12);
+  backdrop-filter: blur(16px);
+  font-family: 'Geist Mono', monospace;
+  overflow: hidden;
+  min-width: var(--radix-select-trigger-width);
+}
+
+.selectViewport {
+  padding: 4px;
+}
+
+.selectItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px 8px 28px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #0f172a;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.selectItem[data-highlighted] {
+  background: rgba(14, 165, 233, 0.1);
+  color: #0284c7;
+}
+
+.selectItemIndicator {
+  position: absolute;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  color: #0284c7;
+}
+
+.infoNote {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.infoNote svg {
+  color: #0284c7;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.infoNote p {
+  margin: 0;
+  font-size: 10.5px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.errorMessage {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: #b91c1c;
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.submitBtn {
+  background: #0f172a;
+  color: #ffffff;
+  border: 1px solid #0f172a;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Geist Mono', monospace;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.15s ease;
+}
+
+.submitBtn:hover {
+  background: #1e293b;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .header {
+    padding: 16px 20px;
+  }
+
+  .main {
+    padding: 16px 20px 40px;
+  }
+
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+
+  .modalCard {
+    padding: 24px 20px;
+  }
+}

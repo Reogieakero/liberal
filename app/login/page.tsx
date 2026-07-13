@@ -69,7 +69,7 @@ export default function StudentLogin() {
 
       <header className={styles.header}>
         <Link href="/" className={styles.backLink}>
-          <ArrowLeft size={14} /> Back to Portal
+          <ArrowLeft size={14} /> Back to Landing 
         </Link>
         <div className={styles.securityBadge}>
           <Shield size={12} /> Secure Access
