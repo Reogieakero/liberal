@@ -1,0 +1,146 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    animation: fadeIn 0.15s ease-out;
+  }
+  
+  .dialog {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.12), 0 10px 10px -5px rgba(14, 165, 233, 0.05);
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: -0.02em;
+    animation: popIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .iconWrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  
+  .iconDanger {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+  }
+  
+  .iconDefault {
+    background: rgba(14, 165, 233, 0.1);
+    color: #0284c7;
+  }
+  
+  .title {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  
+  .message {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  
+  .cancelBtn {
+    background: transparent;
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: 11px;
+    color: #64748b;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  
+  .cancelBtn:hover:not(:disabled) {
+    background: rgba(14, 165, 233, 0.05);
+    color: #0f172a;
+  }
+  
+  .confirmBtn {
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+  }
+  
+  .confirmDanger {
+    background: #dc2626;
+  }
+  
+  .confirmDanger:hover:not(:disabled) {
+    background: #b91c1c;
+  }
+  
+  .confirmDefault {
+    background: #0284c7;
+  }
+  
+  .confirmDefault:hover:not(:disabled) {
+    background: #0369a1;
+  }
+  
+  .confirmBtn:disabled,
+  .cancelBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .spinner {
+    width: 11px;
+    height: 11px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }

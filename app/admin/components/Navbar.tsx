@@ -11,7 +11,6 @@ export default function AdminNavbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown automatically if clicking outside the component
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -30,7 +29,6 @@ export default function AdminNavbar() {
       </div>
 
       <div className={styles.rightSection}>
-        {/* Supabase-style Search Input situated right next to the Profile Section */}
         <div className={styles.searchContainer}>
           <Search size={14} className={styles.searchIcon} />
           <input
@@ -42,7 +40,6 @@ export default function AdminNavbar() {
           />
         </div>
 
-        {/* Profile Avatar Trigger and Floating Dropdown Menu */}
         <div className={styles.profileMenuContainer} ref={dropdownRef}>
           <button
             type="button"
