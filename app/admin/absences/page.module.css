@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&display=swap');
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ffffff 100%);
+  color: #0f172a;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: -0.02em;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.workspaceWrapper {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 16px 20px;
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.newBtn {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.2);
+  transition: background 0.15s ease;
+}
+
+.newBtn:hover { background: #0369a1; }
+
+.controlsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.searchWrapper {
+  position: relative;
+  flex-grow: 1;
+  max-width: 320px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.searchInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 6px;
+  padding: 6px 10px 6px 30px;
+  font-family: inherit;
+  font-size: 11px;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  height: 28px;
+}
+
+.searchInput:focus {
+  border-color: #0284c7;
+  background: #ffffff;
+}
+
+.filtersGroup {
+  display: flex;
+  gap: 8px;
+}
+
+/* Custom Shadcn Select Emulation Styles */
+.customSelectWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.filterSelectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 11px;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+  height: 28px;
+  min-width: 135px;
+  text-align: left;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.filterSelectTrigger:focus {
+  border-color: #0284c7;
+  background: #ffffff;
+}
+
+.chevron {
+  color: #64748b;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.dropdownContent {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  max-width: 240px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: scaleInDropdown 0.1s ease-out;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 6px 8px 6px 24px; /* Space on left left for the check icon */
+  font-size: 11px;
+  color: #334155;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.1s, color 0.1s;
+}
+
+.dropdownItem:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.dropdownItemActive {
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.checkIcon {
+  position: absolute;
+  left: 8px;
+  color: #0284c7;
+}
+
+@keyframes scaleInDropdown {
+  from { transform: translateY(-4px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Base structural setups */
+.tablePanel {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 10px;
+  padding: 12px;
+  backdrop-filter: blur(16px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .main { margin-left: 0; padding: 12px; }
+  .searchWrapper { max-width: 100%; }
+}
+
+.toastNotification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  animation: slideInToast 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toastSuccess { background: #10b981; border: 1px solid #059669; }
+.toastError { background: #ef4444; border: 1px solid #dc2626; }
+
+@keyframes slideInToast {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

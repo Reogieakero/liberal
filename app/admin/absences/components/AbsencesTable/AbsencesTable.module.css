@@ -1,0 +1,107 @@
+.container { width: 100%; }
+
+.tableContainer { overflow-x: auto; width: 100%; }
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 11px;
+}
+
+.dataTable th {
+  color: #64748b;
+  font-weight: 500;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.dataTable td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
+  color: #334155;
+}
+
+.centerAlignColumnHeader { text-align: center !important; }
+.centerAlignColumn { text-align: center; }
+
+.idCell { color: #0284c7; font-weight: 500; white-space: nowrap; }
+
+.nameCell { display: flex; align-items: center; gap: 6px; }
+.nameIcon { color: #0ea5e9; flex-shrink: 0; }
+.nameText { color: #0f172a; font-weight: 500; display: block; }
+.subText { color: #94a3b8; font-size: 10px; }
+
+.programText { color: #475569; font-style: italic; }
+
+.totalBadge {
+  display: inline-block;
+  min-width: 22px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.riskLow { background: rgba(14, 165, 233, 0.08); color: #0369a1; }
+.riskMedium { background: rgba(217, 119, 6, 0.1); color: #d97706; }
+.riskHigh { background: rgba(220, 38, 38, 0.1); color: #dc2626; }
+
+.excusedText { color: #16a34a; font-weight: 600; }
+.unexcusedText { color: #dc2626; font-weight: 600; }
+
+.actionBtn {
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  color: #0284c7;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.actionBtn:hover { background: rgba(14, 165, 233, 0.12); }
+
+.emptyView {
+  text-align: center;
+  color: #64748b;
+  padding: 40px 0;
+  font-style: italic;
+  font-size: 11px;
+}
+
+.paginationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(14, 165, 233, 0.1);
+}
+
+.paginationInfo { font-size: 10px; color: #64748b; }
+
+.paginationControls { display: flex; gap: 6px; }
+
+.pageBtn {
+  background: #ffffff;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  color: #0284c7;
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pageBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pageBtn:hover:not(:disabled) { background: rgba(14, 165, 233, 0.06); }
