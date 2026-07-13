@@ -10,7 +10,6 @@ export default function Carousel() {
         {/* Slide 1 */}
         <div className={styles.heroContent}>
           <div className={styles.sparkTag}>
-            <span className={styles.sparkle}>G</span>
             <span>Automated Log Tracking</span>
             <span className={styles.arrow}>➔</span>
           </div>
@@ -27,7 +26,6 @@ export default function Carousel() {
         {/* Slide 2 */}
         <div className={styles.heroContent}>
           <div className={styles.sparkTag}>
-            <span className={styles.sparkle}>G</span>
             <span>Real-time Broadcasts</span>
             <span className={styles.arrow}>➔</span>
           </div>
@@ -44,7 +42,6 @@ export default function Carousel() {
         {/* Slide 3 */}
         <div className={styles.heroContent}>
           <div className={styles.sparkTag}>
-            <span className={styles.sparkle}>G</span>
             <span>Clearance & Approvals</span>
             <span className={styles.arrow}>➔</span>
           </div>
@@ -61,7 +58,6 @@ export default function Carousel() {
         {/* Slide 4 (Loop Duplicate) */}
         <div className={styles.heroContent}>
           <div className={styles.sparkTag}>
-            <span className={styles.sparkle}>G</span>
             <span>Automated Log Tracking</span>
             <span className={styles.arrow}>➔</span>
           </div>

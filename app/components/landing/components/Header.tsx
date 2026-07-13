@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Shield, User, ArrowUpRight, Menu, X } from 'lucide-react';
 import styles from './Header.module.css';
 
@@ -27,9 +28,9 @@ export default function Header() {
       </nav>
 
       <div className={styles.auth}>
-        <a href="#account" className={styles.createAccount}>
-          <User size={12} /> Faculty Portal
-        </a>
+        <Link href="/login" className={styles.createAccount}>
+          <User size={12} /> Student Login
+        </Link>
       </div>
 
       <button
@@ -52,9 +53,9 @@ export default function Header() {
           Security <ArrowUpRight size={12} />
           <Shield size={12} />
         </button>
-        <a href="#account" className={styles.createAccount} onClick={() => setMenuOpen(false)}>
-          <User size={12} /> Faculty Portal
-        </a>
+        <Link href="/login" className={styles.createAccount} onClick={() => setMenuOpen(false)}>
+          <User size={12} /> Student Login
+        </Link>
       </div>
     </header>
   );
