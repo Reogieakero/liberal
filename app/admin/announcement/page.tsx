@@ -227,7 +227,6 @@ export default function AdminAnnouncements() {
           <div className={styles.headerRow}>
             <div>
               <h1 className={styles.pageTitle}>Announcements Panel</h1>
-              <p className={styles.pageSubtitle}>Manage and distribute campus-wide notifications</p>
             </div>
             <button type="button" className={styles.newBtn} onClick={openCreateModal}>
               <Megaphone size={12} /> New Announcement

@@ -11,11 +11,6 @@ interface UseAdminLoginFormResult {
   handleSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
-/**
- * Owns all the state and submit logic for the admin login form:
- * field values, in-flight/error state, and the POST to /api/auth/login.
- * The page component just wires this up to inputs and renders the result.
- */
 export function useAdminLoginForm(): UseAdminLoginFormResult {
   const router = useRouter();
   const [username, setUsername] = useState('');

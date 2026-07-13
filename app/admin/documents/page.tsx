@@ -11,7 +11,6 @@ import UploadAuditModal from './components/UploadAuditModal/UploadAuditModal';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
-// Shape of a row as read back from the `audits` table
 interface AuditRow {
   id: string;
   audit_code: string;
@@ -23,7 +22,6 @@ interface AuditRow {
   created_at: string;
 }
 
-// Shape the existing table components expect
 interface AuditDisplayRow {
   id: string;
   name: string;
@@ -74,8 +72,6 @@ export default function AdminDocuments() {
     fetchAudits();
   }, []);
 
-  // Persists a new audit log (including its uploaded file URL) to Supabase,
-  // then reflects it in local state so the table updates immediately.
   const handleAddAudit = async (newAudit: {
     name: string;
     type: string;
@@ -121,7 +117,6 @@ export default function AdminDocuments() {
           <div className={styles.headerRow}>
             <div>
               <h1 className={styles.pageTitle}>Documents & Verification Hub</h1>
-              <p className={styles.subtitle}>Attach regulatory compliance audits or verify pending student transaction proofs.</p>
             </div>
             
             {activeTab === 'admin' ? (
