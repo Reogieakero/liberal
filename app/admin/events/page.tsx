@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Plus, Edit2, Trash2, Calendar, X, Paperclip, FileText, Image as ImageIcon, Eye, Clock, AlignLeft, Paperclip as AttachmentIcon, ExternalLink, Key } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, X, Paperclip, FileText, Image as ImageIcon, Eye, Clock, AlignLeft, Paperclip as AttachmentIcon, ExternalLink, Key, ArrowLeft, LayoutGrid, List } from 'lucide-react';
 import AdminNavbar from '../components/Navbar';
 import AdminSidebar from '../components/Sidebar';
 import ConfirmDialog from '../sanctions/components/ConfirmDialog';
@@ -19,7 +19,15 @@ interface SchoolEvent {
   description: string;
   passcode: string;
   attachments?: string[];
+  target_course: string;
 }
+
+const COURSE_OPTIONS = [
+  { value: 'All Students', label: 'All Students' },
+  { value: 'BS Development Communication', label: 'BS Development Communication' },
+  { value: 'AB Political Science', label: 'AB Political Science' },
+  { value: 'BS Psychology', label: 'BS Psychology' }
+];
 
 const generateHourOptions = () => {
   const hours = [];
@@ -44,6 +52,7 @@ export default function EventsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isActionLoading, setIsActionLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'table' | 'card'>('card');
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<SchoolEvent | null>(null);
@@ -59,9 +68,11 @@ export default function EventsPage() {
   const [eventTitle, setEventTitle] = useState('');
   const [description, setDescription] = useState('');
   const [passcode, setPasscode] = useState('');
+  const [targetCourse, setTargetCourse] = useState('All Students');
   
   const [attachments, setAttachments] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const hourOptions = generateHourOptions();
@@ -121,14 +132,19 @@ export default function EventsPage() {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
+    await processFiles(e.target.files);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const processFiles = async (fileList: FileList) => {
     setIsUploading(true);
     setErrorMessage(null);
 
     try {
       const uploadedUrls: string[] = [...attachments];
 
-      for (let i = 0; i < e.target.files.length; i++) {
-        const file = e.target.files[i];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
         
         const isImage = file.type.startsWith('image/');
         const isPdf = file.type === 'application/pdf';
@@ -161,8 +177,28 @@ export default function EventsPage() {
       setErrorMessage(err.message || "File upload failed.");
     } finally {
       setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
     }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isUploading) setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (isUploading) return;
+    if (!e.dataTransfer.files || e.dataTransfer.files.length === 0) return;
+    await processFiles(e.dataTransfer.files);
   };
 
   const removeAttachment = (indexToRemove: number) => {
@@ -179,6 +215,7 @@ export default function EventsPage() {
     setEventTitle('');
     setDescription('');
     setPasscode('');
+    setTargetCourse('All Students');
     setAttachments([]);
     setIsModalOpen(true);
   };
@@ -198,6 +235,7 @@ export default function EventsPage() {
     setEventTitle(eventItem.title);
     setDescription(eventItem.description);
     setPasscode(eventItem.passcode || '');
+    setTargetCourse(eventItem.target_course || 'All Students');
     setAttachments(eventItem.attachments || []);
     setIsModalOpen(true);
   };
@@ -276,6 +314,7 @@ export default function EventsPage() {
         title: eventTitle,
         description: description,
         passcode: passcode,
+        target_course: targetCourse,
         attachments: attachments
       };
 
@@ -321,14 +360,48 @@ export default function EventsPage() {
         
         <main className={styles.main}>
           <div className={styles.headerRow}>
-            <div>
-              <h1 className={styles.pageTitle}>School Events & Calendar</h1>
-              <p className={styles.subtitle}>Plan, view, and organize upcoming school activities, holidays, or event schedules.</p>
-            </div>
-            
-            <button type="button" className={styles.actionBtn} onClick={openAddModal}>
-              <Plus size={14} /> Add New Event
-            </button>
+            {isModalOpen ? (
+              <div key="form-header" className={styles.headerContent} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <button type="button" className={styles.rowBtn} onClick={() => setIsModalOpen(false)} title="Back to Events List">
+                  <ArrowLeft size={14} />
+                </button>
+                <div>
+                  <h1 className={styles.pageTitle}>{editingEvent ? 'Change Event Details' : 'Schedule New Event'}</h1>
+                  <p className={styles.subtitle}>{editingEvent ? 'Update the details for this scheduled event.' : 'Fill in the details to add a new event to the school calendar.'}</p>
+                </div>
+              </div>
+            ) : (
+              <div key="list-header" className={styles.headerContent}>
+                <h1 className={styles.pageTitle}>School Events & Calendar</h1>
+                <p className={styles.subtitle}>Plan, view, and organize upcoming school activities, holidays, or event schedules.</p>
+              </div>
+            )}
+
+            {!isModalOpen && (
+              <div className={styles.controlsRow}>
+                <div style={{ display: 'flex', gap: '4px', background: 'rgba(15, 23, 42, 0.05)', padding: '2px', borderRadius: '8px' }}>
+                  <button 
+                    type="button" 
+                    className={`${styles.viewToggleBtn} ${viewMode === 'card' ? styles.viewToggleBtnActive : ''}`} 
+                    onClick={() => setViewMode('card')}
+                    title="Grid Card View"
+                  >
+                    <LayoutGrid size={14} />
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`${styles.viewToggleBtn} ${viewMode === 'table' ? styles.viewToggleBtnActive : ''}`} 
+                    onClick={() => setViewMode('table')}
+                    title="Detailed List View"
+                  >
+                    <List size={14} />
+                  </button>
+                </div>
+                <button type="button" className={styles.actionBtn} onClick={openAddModal}>
+                  <Plus size={14} /> Add New Event
+                </button>
+              </div>
+            )}
           </div>
 
           {errorMessage && (
@@ -337,102 +410,314 @@ export default function EventsPage() {
             </p>
           )}
 
-          <section className={styles.tablePanel}>
-            <div className={styles.tableContainer}>
-              <table className={styles.dataTable}>
-                <thead>
-                  <tr>
-                    <th style={{ width: '130px' }}>Scheduled Date</th>
-                    <th style={{ width: '160px' }}>Activity Hours</th>
-                    <th>Status</th>
-                    <th>Event Name</th>
-                    <th>Passcode</th>
-                    <th>About / Description</th>
-                    <th>Attachments</th>
-                    <th style={{ textAlign: 'center', width: '120px' }}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {isLoading ? (
+          {!isModalOpen && viewMode === 'table' && (
+            <section className={styles.tablePanel}>
+              <div className={styles.tableContainer}>
+                <table className={styles.dataTable}>
+                  <thead>
                     <tr>
-                      <td colSpan={8} style={{ textAlign: 'center', color: '#64748b', padding: '24px 0' }}>
-                        Loading calendar timelines...
-                      </td>
+                      <th style={{ width: '130px' }}>Scheduled Date</th>
+                      <th style={{ width: '160px' }}>Activity Hours</th>
+                      <th>Status</th>
+                      <th>Event Name</th>
+                      <th>Target Course</th>
+                      <th>Passcode</th>
+                      <th>About / Description</th>
+                      <th>Attachments</th>
+                      <th style={{ textAlign: 'center', width: '120px' }}>Actions</th>
                     </tr>
-                  ) : events.length > 0 ? (
-                    events.map((item) => {
-                      const status = getEventStatus(item.event_date, item.start_time, item.end_time);
-                      return (
-                        <tr key={item.id}>
-                          <td>
-                            <span className={styles.dateBadge}>
-                              {new Date(item.event_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                            </span>
-                          </td>
-                          <td>
-                            <div className={styles.timeBadge}>
-                              {formatFriendlyTime(item.start_time)} - {formatFriendlyTime(item.end_time)}
+                  </thead>
+                  <tbody>
+                    {isLoading ? (
+                      <tr>
+                        <td colSpan={9} style={{ textAlign: 'center', color: '#64748b', padding: '24px 0' }}>
+                          Loading calendar timelines...
+                        </td>
+                      </tr>
+                    ) : events.length > 0 ? (
+                      events.map((item) => {
+                        const status = getEventStatus(item.event_date, item.start_time, item.end_time);
+                        return (
+                          <tr key={item.id}>
+                            <td>
+                              <span className={styles.dateBadge}>
+                                {new Date(item.event_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                              </span>
+                            </td>
+                            <td>
+                              <div className={styles.timeBadge}>
+                                {formatFriendlyTime(item.start_time)} - {formatFriendlyTime(item.end_time)}
+                              </div>
+                            </td>
+                            <td>
+                              <span style={{ 
+                                display: 'inline-block', 
+                                padding: '4px 8px', 
+                                borderRadius: '4px', 
+                                fontSize: '10px', 
+                                fontWeight: 600, 
+                                textTransform: 'uppercase', 
+                                color: status.color, 
+                                backgroundColor: status.bg 
+                              }}>
+                                {status.text}
+                              </span>
+                            </td>
+                            <td className={styles.eventName}>{item.title}</td>
+                            <td>
+                              <span style={{ display: 'inline-block', padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 600, color: '#0284c7', background: 'rgba(14, 165, 233, 0.08)', border: '1px solid rgba(14, 165, 233, 0.2)', whiteSpace: 'nowrap' }}>
+                                {item.target_course}
+                              </span>
+                            </td>
+                            <td style={{ color: '#0284c7', fontFamily: 'var(--font-geist-mono)', fontWeight: 600 }}>{item.passcode}</td>
+                            <td style={{ color: '#475569', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {item.description}
+                            </td>
+                            <td>
+                              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                                {item.attachments && item.attachments.map((url, i) => {
+                                  const isImg = url.match(/\.(jpeg|jpg|gif|png|webp)(\?|$)/i);
+                                  return (
+                                    <button key={i} type="button" onClick={() => handleOpenViewOverlay(item)} style={{ display: 'flex', alignItems: 'center', padding: '4px 6px', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '4px', color: '#334155', fontSize: '10px', gap: '4px', cursor: 'pointer' }}>
+                                      {isImg ? <ImageIcon size={11} /> : <FileText size={11} />}
+                                      <span>Doc #{i + 1}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </td>
+                            <td>
+                              <div className={styles.actionButtonsGroup} style={{ justifyContent: 'center', gap: '4px' }}>
+                                <button type="button" className={styles.rowBtn} onClick={() => handleOpenViewOverlay(item)} title="View Event Blueprint">
+                                  <Eye size={13} />
+                                </button>
+                                <button type="button" className={styles.rowBtn} onClick={() => openEditModal(item)} title="Edit Event Details">
+                                  <Edit2 size={13} />
+                                </button>
+                                <button type="button" className={`${styles.rowBtn} ${styles.deleteBtn}`} onClick={() => handlePreDeleteCheck(item)} title="Delete This Event">
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td colSpan={9} style={{ textAlign: 'center', color: '#64748b', padding: '32px 0', fontStyle: 'italic' }}>
+                          No events listed yet. Click &quot;Add New Event&quot; to place one on the calendar.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
+
+          {!isModalOpen && viewMode === 'card' && (
+            <section className={styles.cardsGrid}>
+              {isLoading ? (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#64748b', padding: '48px 0' }}>
+                  Loading event dashboards...
+                </div>
+              ) : events.length > 0 ? (
+                events.map((item) => {
+                  const status = getEventStatus(item.event_date, item.start_time, item.end_time);
+                  return (
+                    <div key={item.id} className={styles.eventCard}>
+                      <div className={styles.cardHeader}>
+                        <div className={styles.cardMetaRow}>
+                          <span className={styles.dateBadge}>
+                            {new Date(item.event_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                          </span>
+                          <span style={{ 
+                            display: 'inline-block', 
+                            padding: '2px 6px', 
+                            borderRadius: '4px', 
+                            fontSize: '9px', 
+                            fontWeight: 600, 
+                            textTransform: 'uppercase', 
+                            color: status.color, 
+                            backgroundColor: status.bg 
+                          }}>
+                            {status.text}
+                          </span>
+                        </div>
+                        <h3 className={styles.cardTitle} title={item.title}>{item.title}</h3>
+                      </div>
+
+                      <div className={styles.cardBody}>
+                        <div className={styles.timeBadge} style={{ alignSelf: 'flex-start', fontSize: '9px' }}>
+                          {formatFriendlyTime(item.start_time)} - {formatFriendlyTime(item.end_time)}
+                        </div>
+                        <p className={styles.cardDesc} title={item.description}>
+                          {item.description}
+                        </p>
+                      </div>
+
+                      <div className={styles.cardFooter}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <span style={{ display: 'inline-block', alignSelf: 'flex-start', padding: '2px 6px', borderRadius: '4px', fontSize: '9px', fontWeight: 600, color: '#0284c7', background: 'rgba(14, 165, 233, 0.08)', border: '1px solid rgba(14, 165, 233, 0.2)', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={item.target_course}>
+                            {item.target_course}
+                          </span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#0284c7', fontWeight: 600 }}>
+                            <Key size={10} />
+                            <span>{item.passcode}</span>
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', borderTop: '1px dashed rgba(14, 165, 233, 0.1)', paddingTop: '8px', marginTop: '4px' }}>
+                          <div style={{ display: 'flex', gap: '4px' }}>
+                            {item.attachments && item.attachments.slice(0, 2).map((url, idx) => (
+                              <div key={idx} style={{ color: '#64748b' }} title="Attachment item">
+                                {url.match(/\.(jpeg|jpg|gif|png|webp)(\?|$)/i) ? <ImageIcon size={11} /> : <FileText size={11} />}
+                              </div>
+                            ))}
+                            {item.attachments && item.attachments.length > 2 && (
+                              <span style={{ fontSize: '9px', color: '#64748b', fontWeight: 600 }}>+{item.attachments.length - 2}</span>
+                            )}
+                          </div>
+
+                          <div className={styles.actionButtonsGroup} style={{ marginLeft: 'auto' }}>
+                            <button type="button" className={styles.rowBtn} onClick={() => handleOpenViewOverlay(item)} title="Inspect Event Layout">
+                              <Eye size={12} />
+                            </button>
+                            <button type="button" className={styles.rowBtn} onClick={() => openEditModal(item)} title="Modify Settings">
+                              <Edit2 size={12} />
+                            </button>
+                            <button type="button" className={`${styles.rowBtn} ${styles.deleteBtn}`} onClick={() => handlePreDeleteCheck(item)} title="Destroy Entry">
+                              <Trash2 size={12} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#64748b', padding: '48px 0', fontStyle: 'italic' }}>
+                  No active listings found. Begin by scheduling a new event above.
+                </div>
+              )}
+            </section>
+          )}
+
+          {isModalOpen && (
+            <section className={styles.formPanel}>
+              <form onSubmit={handlePreSubmitCheck} className={styles.modalForm}>
+                <div className={styles.inputGroup}>
+                  <CustomDatePicker label="Event Date" value={eventDate} onChange={setEventDate} />
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', gap: '6px' }}>
+                    <div style={{ flex: 1 }}>
+                      <CustomDropdown label="Start Hour" options={hourOptions} selectedValue={startHour} onChange={setStartHour} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <CustomDropdown label="Minute" options={minuteOptions} selectedValue={startMinute} onChange={setStartMinute} />
+                    </div>
+                  </div>
+
+                  <div style={{ flex: 1, display: 'flex', gap: '6px' }}>
+                    <div style={{ flex: 1 }}>
+                      <CustomDropdown label="End Hour" options={hourOptions} selectedValue={endHour} onChange={setEndHour} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <CustomDropdown label="Minute" options={minuteOptions} selectedValue={endMinute} onChange={setEndMinute} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label>Event Name</label>
+                  <input type="text" placeholder="e.g., Parent-Teacher Conference, Sports Festival" required className={styles.textInput} value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <CustomDropdown label="Target Course Audience" options={COURSE_OPTIONS} selectedValue={targetCourse} onChange={setTargetCourse} />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label>Scanner Passcode</label>
+                  <input type="text" placeholder="e.g., CONF2026, SPORTS-DAY" required className={styles.textInput} value={passcode} onChange={(e) => setPasscode(e.target.value)} />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label>Event Description</label>
+                  <textarea rows={3} placeholder="Provide brief details like the location, who can join, or required materials..." required className={styles.textArea} value={description} onChange={(e) => setDescription(e.target.value)} />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label>Attachments</label>
+                  <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onClick={() => !isUploading && fileInputRef.current?.click()}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '6px',
+                      textAlign: 'center',
+                      cursor: isUploading ? 'default' : 'pointer',
+                      padding: '20px 12px',
+                      border: `1px dashed ${isDragging ? '#0284c7' : 'rgba(14, 165, 233, 0.3)'}`,
+                      borderRadius: '8px',
+                      background: isDragging ? 'rgba(14, 165, 233, 0.08)' : '#f8fafc',
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      color: '#334155',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <Paperclip size={16} style={{ color: isDragging ? '#0284c7' : '#64748b' }} />
+                    <span>{isUploading ? 'Uploading attachments...' : isDragging ? 'Drop files to attach' : 'Drag & drop images or PDFs here, or click to browse'}</span>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      multiple
+                      style={{ display: 'none' }}
+                      onChange={handleFileUpload}
+                      disabled={isUploading}
+                      accept="image/*,.pdf"
+                    />
+                  </div>
+
+                  {attachments.length > 0 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px' }}>
+                      {attachments.map((url, idx) => {
+                        const isImg = url.match(/\.(jpeg|jpg|gif|png|webp)(\?|$)/i);
+                        return (
+                          <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', background: '#f1f5f9', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '10px', color: '#334155' }}>
+                              {isImg ? <ImageIcon size={12} /> : <FileText size={12} />}
+                              <span style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>File {idx + 1}</span>
                             </div>
-                          </td>
-                          <td>
-                            <span style={{ 
-                              display: 'inline-block', 
-                              padding: '4px 8px', 
-                              borderRadius: '4px', 
-                              fontSize: '10px', 
-                              fontWeight: 600, 
-                              textTransform: 'uppercase', 
-                              color: status.color, 
-                              backgroundColor: status.bg 
-                            }}>
-                              {status.text}
-                            </span>
-                          </td>
-                          <td className={styles.eventName}>{item.title}</td>
-                          <td style={{ color: '#0284c7', fontFamily: 'var(--font-geist-mono)', fontWeight: 600 }}>{item.passcode}</td>
-                          <td style={{ color: '#475569', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {item.description}
-                          </td>
-                          <td>
-                            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                              {item.attachments && item.attachments.map((url, i) => {
-                                const isImg = url.match(/\.(jpeg|jpg|gif|png|webp)(\?|$)/i);
-                                return (
-                                  <button key={i} type="button" onClick={() => handleOpenViewOverlay(item)} style={{ display: 'flex', alignItems: 'center', padding: '4px 6px', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '4px', color: '#334155', fontSize: '10px', gap: '4px', cursor: 'pointer' }}>
-                                    {isImg ? <ImageIcon size={11} /> : <FileText size={11} />}
-                                    <span>Doc #{i + 1}</span>
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </td>
-                          <td>
-                            <div className={styles.actionButtonsGroup} style={{ justifyContent: 'center', gap: '4px' }}>
-                              <button type="button" className={styles.rowBtn} onClick={() => handleOpenViewOverlay(item)} title="View Event Blueprint">
-                                <Eye size={13} />
-                              </button>
-                              <button type="button" className={styles.rowBtn} onClick={() => openEditModal(item)} title="Edit Event Details">
-                                <Edit2 size={13} />
-                              </button>
-                              <button type="button" className={`${styles.rowBtn} ${styles.deleteBtn}`} onClick={() => handlePreDeleteCheck(item)} title="Delete This Event">
-                                <Trash2 size={13} />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <tr>
-                      <td colSpan={8} style={{ textAlign: 'center', color: '#64748b', padding: '32px 0', fontStyle: 'italic' }}>
-                        No events listed yet. Click &quot;Add New Event&quot; to place one on the calendar.
-                      </td>
-                    </tr>
+                            <button type="button" onClick={() => removeAttachment(idx)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                              <X size={12} />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
                   )}
-                </tbody>
-              </table>
-            </div>
-          </section>
+                </div>
+
+                <div className={styles.formActions}>
+                  <button type="button" style={{ background: 'transparent', border: '1px solid rgba(14, 165, 233, 0.2)', padding: '6px 12px', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', color: '#64748b' }} onClick={() => setIsModalOpen(false)}>
+                    Cancel
+                  </button>
+                  <button type="submit" disabled={isUploading} style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 12px', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', opacity: isUploading ? 0.6 : 1 }}>
+                    Save Event
+                  </button>
+                </div>
+              </form>
+            </section>
+          )}
         </main>
       </div>
 
@@ -489,6 +774,13 @@ export default function EventsPage() {
                       <Clock size={11} /> Timeline
                     </span>
                     <span style={{ fontWeight: 500, fontSize: '11px' }}>{formatFriendlyTime(viewingEvent.start_time)} - {formatFriendlyTime(viewingEvent.end_time)}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <span style={{ color: '#64748b', fontSize: '10px', textTransform: 'uppercase', display: 'block', marginBottom: '3px', fontWeight: 500 }}>Target Course Audience</span>
+                  <div style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, color: '#0284c7', background: 'rgba(14, 165, 233, 0.08)', border: '1px solid rgba(14, 165, 233, 0.2)' }}>
+                    {viewingEvent.target_course}
                   </div>
                 </div>
 
@@ -608,107 +900,6 @@ export default function EventsPage() {
                 )}
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {isModalOpen && (
-        <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
-          <div className={styles.modalWindow} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.modalHeader}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Calendar size={16} style={{ color: '#0284c7' }} />
-                <h3>{editingEvent ? 'Change Event Details' : 'Schedule New Event'}</h3>
-              </div>
-              <button type="button" style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#64748b' }} onClick={() => setIsModalOpen(false)}>
-                <X size={16} />
-              </button>
-            </div>
-
-            <form onSubmit={handlePreSubmitCheck} className={styles.modalForm}>
-              <div className={styles.inputGroup}>
-                <CustomDatePicker label="Event Date" value={eventDate} onChange={setEventDate} />
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ flex: 1, display: 'flex', gap: '6px' }}>
-                  <div style={{ flex: 1 }}>
-                    <CustomDropdown label="Start Hour" options={hourOptions} selectedValue={startHour} onChange={setStartHour} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <CustomDropdown label="Minute" options={minuteOptions} selectedValue={startMinute} onChange={setStartMinute} />
-                  </div>
-                </div>
-                
-                <div style={{ flex: 1, display: 'flex', gap: '6px' }}>
-                  <div style={{ flex: 1 }}>
-                    <CustomDropdown label="End Hour" options={hourOptions} selectedValue={endHour} onChange={setEndHour} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <CustomDropdown label="Minute" options={minuteOptions} selectedValue={endMinute} onChange={setEndMinute} />
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label>Event Name</label>
-                <input type="text" placeholder="e.g., Parent-Teacher Conference, Sports Festival" required className={styles.textInput} value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label>Scanner Passcode</label>
-                <input type="text" placeholder="e.g., CONF2026, SPORTS-DAY" required className={styles.textInput} value={passcode} onChange={(e) => setPasscode(e.target.value)} />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label>Event Description</label>
-                <textarea rows={3} placeholder="Provide brief details like the location, who can join, or required materials..." required className={styles.textArea} value={description} onChange={(e) => setDescription(e.target.value)} />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '6px 10px', border: '1px dashed rgba(14, 165, 233, 0.3)', borderRadius: '6px', width: 'fit-content', background: '#f8fafc', fontSize: '11px', fontWeight: 500, color: '#334155' }}>
-                  <Paperclip size={13} />
-                  {isUploading ? 'Uploading attachments...' : 'Attach Images or Files'}
-                  <input 
-                    type="file" 
-                    ref={fileInputRef} 
-                    multiple 
-                    style={{ display: 'none' }} 
-                    onChange={handleFileUpload} 
-                    disabled={isUploading} 
-                    accept="image/*,.pdf" 
-                  />
-                </label>
-
-                {attachments.length > 0 && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px' }}>
-                    {attachments.map((url, idx) => {
-                      const isImg = url.match(/\.(jpeg|jpg|gif|png|webp)(\?|$)/i);
-                      return (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', background: '#f1f5f9', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '10px', color: '#334155' }}>
-                            {isImg ? <ImageIcon size={12} /> : <FileText size={12} />}
-                            <span style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>File {idx + 1}</span>
-                          </div>
-                          <button type="button" onClick={() => removeAttachment(idx)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                            <X size={12} />
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              <div className={styles.formActions}>
-                <button type="button" style={{ background: 'transparent', border: '1px solid rgba(14, 165, 233, 0.2)', padding: '6px 12px', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', color: '#64748b' }} onClick={() => setIsModalOpen(false)}>
-                  Cancel
-                </button>
-                <button type="submit" disabled={isUploading} style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 12px', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', opacity: isUploading ? 0.6 : 1 }}>
-                  Save Event
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}

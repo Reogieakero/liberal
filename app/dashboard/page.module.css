@@ -30,6 +30,33 @@
   background: conic-gradient(from 180deg at 50% 50%, #0284c7 0deg, #ffffff 360deg);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerIconBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #475569;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-family: 'Geist Mono', monospace;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.headerIconBtn:hover {
+  color: #0284c7;
+  border-color: #0284c7;
+}
+
 .signOutBtn {
   display: flex;
   align-items: center;
@@ -54,7 +81,6 @@
   padding: 20px 40px 60px;
 }
 
-/* Dashboard content sits underneath the modal, dimmed and inert */
 .blockedContent {
   filter: blur(3px);
   opacity: 0.5;
@@ -73,6 +99,62 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
+  align-items: start;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statCard svg {
+  color: #0284c7;
+}
+
+.statHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.statValue {
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+}
+
+.statSub {
+  font-size: 10.5px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.sanctionName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #b91c1c;
+  letter-spacing: -0.02em;
+}
+
+.lowerSection {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  align-items: start;
 }
 
 .card {
@@ -87,20 +169,446 @@
   color: #0284c7;
 }
 
-.card h3 {
-  font-size: 14px;
-  font-weight: 500;
-  margin: 12px 0 6px 0;
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.card p {
+.cardHeader h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.cardSubtitle {
   font-size: 11px;
   color: #64748b;
-  margin: 0;
+  margin: 6px 0 14px 0;
   line-height: 1.5;
 }
 
-/* Complete-profile modal */
+.emptyState {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.attendanceTableWrapper {
+  overflow-x: auto;
+}
+
+.attendanceTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendanceTable th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  padding: 0 10px 8px 0;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+  font-weight: 500;
+}
+
+.attendanceTable td {
+  font-size: 12px;
+  color: #0f172a;
+  padding: 10px 10px 10px 0;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+  white-space: nowrap;
+}
+
+.attendanceTable tr:last-child td {
+  border-bottom: none;
+}
+
+.attendancePresentBadge {
+  font-size: 9.5px;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.1);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.attendanceAbsentBadge {
+  font-size: 9.5px;
+  color: #b91c1c;
+  background: rgba(220, 38, 38, 0.1);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.paymentCarousel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.premiumCard {
+  position: relative;
+  border-radius: 20px;
+  padding: 22px;
+  color: #f8fafc;
+  min-height: 168px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.premiumCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 48px rgba(2, 6, 23, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.premiumCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+  pointer-events: none;
+}
+
+.premiumCardGcash {
+  background: radial-gradient(circle at 85% -10%, rgba(0, 163, 224, 0.45) 0%, transparent 55%), linear-gradient(150deg, #0b1220 0%, #111a2e 55%, #0d1424 100%);
+}
+
+.premiumCardPaymaya {
+  background: radial-gradient(circle at 85% -10%, rgba(0, 195, 137, 0.4) 0%, transparent 55%), linear-gradient(150deg, #0b1220 0%, #10201c 55%, #0d1a17 100%);
+}
+
+.premiumCardBank {
+  background: radial-gradient(circle at 85% -10%, rgba(217, 179, 87, 0.35) 0%, transparent 55%), linear-gradient(150deg, #0b0d12 0%, #191a1f 55%, #101114 100%);
+}
+
+.premiumCardOther {
+  background: radial-gradient(circle at 85% -10%, rgba(148, 163, 184, 0.35) 0%, transparent 55%), linear-gradient(150deg, #0f131a 0%, #1a1f29 55%, #12161d 100%);
+}
+
+.premiumGhostIcon {
+  position: absolute;
+  top: -20px;
+  right: -16px;
+  color: rgba(255, 255, 255, 0.06);
+}
+
+.premiumTopRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.premiumBadge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f8fafc;
+}
+
+.premiumTapHint {
+  font-size: 9.5px;
+  color: rgba(248, 250, 252, 0.55);
+  letter-spacing: 0.03em;
+}
+
+.premiumMiddle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.premiumMethodType {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(248, 250, 252, 0.6);
+}
+
+.premiumNumber {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #f8fafc;
+}
+
+.premiumBottomRow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.premiumAccountName {
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.85);
+}
+
+.premiumNav {
+  display: flex;
+  gap: 6px;
+}
+
+.premiumNavBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease;
+}
+
+.premiumNavBtn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.premiumEmptyState {
+  margin: auto;
+  font-size: 11px;
+  color: rgba(248, 250, 252, 0.75);
+}
+
+.premiumDots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.premiumDot,
+.premiumDotActive {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.premiumDot {
+  background: rgba(2, 132, 199, 0.25);
+}
+
+.premiumDotActive {
+  background: #0284c7;
+  width: 16px;
+  border-radius: 100px;
+}
+
+.paymentModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 70;
+}
+
+.paymentModalCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 16px;
+  padding: 26px;
+  width: 100%;
+  max-width: 360px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+.paymentModalCloseBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.1);
+  border: none;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.paymentModalHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.paymentModalIconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paymentModalTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.paymentModalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.paymentModalRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+}
+
+.paymentModalRow:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.paymentModalLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.paymentModalValue {
+  font-size: 13px;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.paymentModalQr {
+  width: 100%;
+  max-width: 180px;
+  border-radius: 10px;
+  margin: 6px auto 0 auto;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.announcementPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.viewAllLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  color: #0284c7;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.viewAllLink:hover {
+  text-decoration: underline;
+}
+
+.miniAnnouncementList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.miniAnnouncementItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+}
+
+.miniAnnouncementItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.miniAnnouncementTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.miniAnnouncementTag {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.1);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.miniAnnouncementDate {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.miniAnnouncementTitle {
+  font-size: 12px;
+  color: #0f172a;
+  line-height: 1.4;
+}
+
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -343,9 +851,25 @@
   cursor: not-allowed;
 }
 
+@media (max-width: 900px) {
+  .lowerSection {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 700px) {
   .header {
     padding: 16px 20px;
+  }
+
+  .headerActions {
+    gap: 6px;
+  }
+
+  .headerIconBtn span,
+  .headerIconBtn {
+    font-size: 10px;
+    padding: 6px 9px;
   }
 
   .main {

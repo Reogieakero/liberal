@@ -21,6 +21,29 @@ export default async function StudentDashboardPage() {
   const needsProfile =
     !student || !student.student_number || !student.full_name || !student.program;
 
+  const [paymentMethodsRes, announcementsRes] = await Promise.all([
+    supabase
+      .from('payment_methods')
+      .select('*')
+      .eq('is_active', true)
+      .order('method_type', { ascending: true }),
+    supabase
+      .from('announcements')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(2),
+  ]);
+
+  if (paymentMethodsRes.error) {
+    console.error('payment_methods query failed:', paymentMethodsRes.error.message);
+  }
+  if (announcementsRes.error) {
+    console.error('announcements query failed:', announcementsRes.error.message);
+  }
+
+  const paymentMethods = paymentMethodsRes.data ?? [];
+  const announcements = announcementsRes.data ?? [];
+
   return (
     <DashboardShell
       user={{
@@ -30,6 +53,8 @@ export default async function StudentDashboardPage() {
       }}
       student={student}
       needsProfile={needsProfile}
+      paymentMethods={paymentMethods}
+      announcements={announcements}
     />
   );
 }
